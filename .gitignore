@@ -1,0 +1,11 @@
+data/*
+*.pyc
+node_modules/*
+*/node_modules/*
+package-lock.*
+.vscode/*
+*.aws*
+build_image.sh
+TwitterRxApi/src/main/.DS_Store*
+__pycache__/*
+rabbit_data/*

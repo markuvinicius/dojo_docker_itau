@@ -1,0 +1,47 @@
+version: "3.7"
+services:
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672" 
+    volumes: 
+      - "./rabbit_data:/var/lib/rabbitmq" 
+  
+  twitter-collector:    
+    image: twitter-colector:0.0.1           
+    depends_on: 
+      - rabbitmq
+
+  mongodb:    
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"    
+    restart: always
+    volumes:
+      - "./mongo_data:/data/db"   
+
+  comprehend:
+    image: twitter-raw-consumer-comprehend:0.0.1
+    depends_on:
+      - rabbitmq
+      - mongodb 
+
+#networks:
+#    application:
+#      driver: bridge
+  
+  #artemis:
+  #  image: vromero/activemq-artemis:latest-alpine  
+  #  container_name: activemq
+  #  environment:
+  #    ARTEMIS_USERNAME: user-amq
+  #    ARTEMIS_PASSWORD: password-amq
+  #  ports:
+  #    - "8161:8161"
+  #    - "61616:61616"
+
+  
